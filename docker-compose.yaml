@@ -1,0 +1,81 @@
+version: '3.0'
+
+services:
+    web_server:
+      container_name: todo_nginx
+      image: nginx
+      networks:
+        todo_net:
+          ipv4_address: 172.25.238.10
+      ports:
+        - "8080:80"
+      links:
+        - php_app
+        - redis
+      volumes:
+        - "./:/var/www"
+        - "./.docker/nginx/vhost/sf4_vhost.conf:/etc/nginx/conf.d/030-sf4.conf:ro"
+
+    php_app:
+      container_name: todo_php
+      build: .docker/
+      networks:
+        todo_net:
+          ipv4_address: 172.25.238.11
+      links:
+        - db_server
+      volumes:
+        - "./.docker/php/config/php.ini:/usr/local/etc/php/conf.d/030-custom.ini:ro"
+        - "./:/var/www"
+      working_dir: "/var/www"
+
+    db_server:
+      container_name: todo_mysql
+      image: mysql
+      command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      networks:
+        todo_net:
+          ipv4_address: 172.25.238.12
+      environment:
+        - "MYSQL_ROOT_PASSWORD=todo"
+        - "MYSQL_DATABASE=todo"
+        - "MYSQL_USER=todo"
+        - "MYSQL_PASSWORD=todo"
+      ports:
+        - "3308:3306"
+      volumes:
+        - tododata:/var/lib/mysql
+
+    blackfire:
+      container_name: todo_blackfire
+      image: blackfire/blackfire
+      environment:
+          - BLACKFIRE_SERVER_ID
+          - BLACKFIRE_SERVER_TOKEN
+      networks:
+        todo_net:
+          ipv4_address: 172.25.238.13
+
+    redis:
+      container_name: todo_redis
+      image: redis
+      command: ["redis-server", "--appendonly", "yes"]
+      networks:
+        todo_net:
+          ipv4_address: 172.25.238.14
+      ports:
+          - "6379:6379"
+      volumes:
+        - redisdata:/data
+
+networks:
+  todo_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.238.0/24
+
+volumes:
+  tododata:
+  redisdata:
