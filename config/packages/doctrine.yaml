@@ -25,3 +25,21 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        query_cache_driver:
+            type:                 redis # Required
+            host:                 redis
+            port:                 ~
+            instance_class:       ~
+            class:                ~
+        metadata_cache_driver:
+            type:                 redis # Required
+            host:                 redis
+            port:                 ~
+            instance_class:       ~
+            class:                ~
+        result_cache_driver:
+            type:                 redis # Required
+            host:                 redis
+            port:                 ~
+            instance_class:       ~
+            class:                ~

@@ -7,12 +7,17 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
  * @ORM\HasLifecycleCallbacks()
- * @ApiResource(attributes={"pagination_items_per_page"=5})
+ * @ApiResource(attributes={
+ *     "pagination_items_per_page"=5,
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}}
+ *     })
  */
 class Task
 {
@@ -28,6 +33,7 @@ class Task
      *
      * @ORM\Column(type="string", nullable=false)
      * @Assert\NotBlank()
+     * @Groups({"read", "write"})
      */
     private $title;
 
@@ -35,6 +41,7 @@ class Task
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Groups({"read", "write"})
      */
     private $description;
 
@@ -45,14 +52,16 @@ class Task
      * @Assert\NotBlank()
      * @Assert\DateTime()
      * @ApiFilter(SearchFilter::class, strategy="partial")
+     * @Groups({"read", "write"})
      */
     private $dueDate;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" = false})
      * @ApiFilter(BooleanFilter::class)
+     * @Groups({"read", "write"})
      */
     private $completed;
 
@@ -61,6 +70,7 @@ class Task
      *
      * @ORM\Column(type="datetime")
      * @ApiFilter(SearchFilter::class, strategy="partial")
+     * @Groups({"read"})
      */
     private $createdAt;
 
@@ -69,6 +79,7 @@ class Task
      *
      * @ORM\Column(type="datetime")
      * @ApiFilter(SearchFilter::class, strategy="partial")
+     * @Groups({"read"})
      */
     private $updatedAt;
 
