@@ -25,6 +25,8 @@ $ git clone https://github.com/recchia/todo.git
 $ cd todo
 $ docker-compose build
 $ docker-compose up -d
+$ docker exec -ti todo_php bash
+$ composer install prefer-dist
 ```
 
 Next you should browse [http://127.0.0.1:8080](http://127.0.0.1:8080) to see the app running and click on document link to see examples and try the API.
