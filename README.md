@@ -36,7 +36,7 @@ Next you should browse [http://127.0.0.1:8080](http://127.0.0.1:8080) to see the
 Blackfire empowers all developers and IT/Ops to continuously verify and improve their app’s
 performance, throughout its lifecycle, by getting the right information at the right moment.
 
-In order to use you need export the following environment variables. You can set those in user .profile file.
+In order to use it you need export the following environment variables. You can set those in user .profile file.
 
 ```sh
 $ export BLACKFIRE_CLIENT_ID=[hash]
