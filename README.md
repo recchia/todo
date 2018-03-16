@@ -23,7 +23,6 @@ In order to getting the api working you need to execute the next commands.
 ```sh
 $ git clone https://github.com/recchia/todo.git
 $ cd todo
-$ docker-compose build
 $ docker-compose up -d
 $ docker exec -ti todo_php bash
 $ composer install --prefer-dist
