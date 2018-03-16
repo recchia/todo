@@ -31,7 +31,7 @@ $ composer install --prefer-dist
 
 Next you should browse [http://127.0.0.1:8080](http://127.0.0.1:8080) to see the app running and click on document link to see examples and try the API.
 
-### Blackfire
+### Blackfire (Optional)
 
 Blackfire empowers all developers and IT/Ops to continuously verify and improve their app’s
 performance, throughout its lifecycle, by getting the right information at the right moment.
